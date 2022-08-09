@@ -18,7 +18,7 @@ Type: Vision Based
 - In Vision based model till now most of the works has been done on CNN based architecture. CNN has also shown remarkable results and has been very well successful.
 - Beginning of the vision based modelling was with ALexNet which was remarkable with ImageNet Classification Challenge and the performance was revolutionary.
 
-![Untitled](Swin%20Transformer%20Hierarchical%20Vision%20Transformer%20u%20e84489e1378145838e6d99046f9eb01f/Untitled.png)
+ ![image](https://user-images.githubusercontent.com/71754779/183719220-2a3b66ab-7af8-4753-8ba7-f77fea7e9676.png)
 
 - CNN has been serving as the backbone for the vision based works.
 - On the other hand Language based model has been using architectures based on Transformers. Transformers has a greater mechanism of attention which helps the model for the long-range dependencies. These architectures are designed for the sequence modelling and the transduction task.
@@ -38,7 +38,7 @@ Type: Vision Based
 
 - Constructs hierarchical maps
 
-![Untitled](Swin%20Transformer%20Hierarchical%20Vision%20Transformer%20u%20e84489e1378145838e6d99046f9eb01f/Untitled%201.png)
+![image](https://user-images.githubusercontent.com/71754779/183720215-69071faa-971a-4bdb-93f2-9e3fe7bdfaeb.png)
 
 - In this method window size is fixed and self attention is applied locally within the red block region which will not be more than linear complexity with respect to image size.
 - Linear Computational complexity with respect to image size.
@@ -47,19 +47,19 @@ Type: Vision Based
 
 Overview of Swin transformer architecture is shown below
 
-![Untitled](Swin%20Transformer%20Hierarchical%20Vision%20Transformer%20u%20e84489e1378145838e6d99046f9eb01f/Untitled%202.png)
+![image](https://user-images.githubusercontent.com/71754779/183720127-f443e6d1-56a6-4a6e-ac1f-e0901c99b0e8.png)
 
 As we can see that our RGB image firstly get passed through **Patch Partition** layer, which only does the work of splitting the images into patches same as we do in ***ViT*** model. Each patch is treated as a token. In this paper they had use 4 x 4 patches and thus the feature dimension will be 4 x 4 x 3 = 48.
 
 Then the Linear Embedding layer gets applied to these tokens to convert these into arbitrary dimension denoted as **C**. This architecture contains several Swin Transformer Block with modified Self Attention computation. There are total of 4 stages in this architecture which jointly produces a hierarchical representation, with the same feature maps resolution as that of those typical convolutional networks. Leaving first stage every stage has a Patch Merging Layer before the Swin Transformer Block which just merges the dimension of resolution.
 
-![Untitled](Swin%20Transformer%20Hierarchical%20Vision%20Transformer%20u%20e84489e1378145838e6d99046f9eb01f/Untitled%203.png)
+![image](https://user-images.githubusercontent.com/71754779/183721040-23edd299-172c-4178-855c-ca72373b290e.png)
 
 - In Patch Merging layer we has a linear layer which is nothing other than vanilla neural network. As we are using linear layer so we have a power of defining the size of output we want.
 
 ### Swin Transformer Block
 
-![Untitled](Swin%20Transformer%20Hierarchical%20Vision%20Transformer%20u%20e84489e1378145838e6d99046f9eb01f/Untitled%204.png)
+![image](https://user-images.githubusercontent.com/71754779/183721183-4d890214-4676-407b-aea9-3ff23a2fa256.png)
 
 Swin Transformer Block is made up by replacing standard multi head attention layer with module based on a shifted windows with all the other layers being kept same. A Layer Normalization is applied before every MSA/ MLP module. After every MSA layer there has been 2 MLP layers with GELU non-linearity in between.
 
@@ -69,9 +69,9 @@ Standard transformers architecture and its adaptation for the image classificati
 
 So this paper provides a better solution for this problem by ***Self attention in non-overlapping windows.*** So what they did was to calculate the self attention in the local windows. These windows are partitioned in such a way that they are not overlapping. I have also attached the complexity of both MSA and W-MSA below :-
 
-![Untitled](Swin%20Transformer%20Hierarchical%20Vision%20Transformer%20u%20e84489e1378145838e6d99046f9eb01f/Untitled%205.png)
+![image](https://user-images.githubusercontent.com/71754779/183721360-94655c73-416c-443f-a0b0-cfe6ab8f039b.png)
 
-![Untitled](Swin%20Transformer%20Hierarchical%20Vision%20Transformer%20u%20e84489e1378145838e6d99046f9eb01f/Untitled%206.png)
+![image](https://user-images.githubusercontent.com/71754779/183721418-a9dc703e-f9cd-4797-ae26-376c4602668c.png)
 
 Here in above shown pic h x w is the dimension of the images and M is the window size of partition of images (M x M). Mostly people choose M to be 7. We can simply see that the Global Self attention computation is really not affordable if h and w will be high.
 
@@ -79,7 +79,7 @@ Here in above shown pic h x w is the dimension of the images and M is the window
 
 The window based self attention module lacks connection between the layers which limits the modelling powers. So the solution for this issue is to do Shifted Window self attention approach alternatively with normal window based self attention. With the shited window based approach, consecutive Swin transformers blocks are computed as :-
 
-![Untitled](Swin%20Transformer%20Hierarchical%20Vision%20Transformer%20u%20e84489e1378145838e6d99046f9eb01f/Untitled%207.png)
+![image](https://user-images.githubusercontent.com/71754779/183721942-6747ae8f-299c-49da-91b2-c17e04dce8f1.png)
 
 The shifted window partitioning approach introduces connection between the neighboring non overlapping windows in the previous layer and found to be effective in image classification, object detection and semantic segmentation. The results are written below with experiments.
 
@@ -87,13 +87,13 @@ The shifted window partitioning approach introduces connection between the neigh
 
 An issue with the shifted window partitioning is that it will result in more windows and sometimes small windows than the size of M x M. So the solution for this issue is simple cyclic shifting  as shown in image below :-
 
-![Untitled](Swin%20Transformer%20Hierarchical%20Vision%20Transformer%20u%20e84489e1378145838e6d99046f9eb01f/Untitled%208.png)
+![image](https://user-images.githubusercontent.com/71754779/183721703-8296926f-3d0e-4068-9404-f4db27408419.png)
 
 ### Relative Positional Bias
 
 For the computation part of the self attention we follow by including relative positional bias to each head for computing similarity.
 
-![Untitled](Swin%20Transformer%20Hierarchical%20Vision%20Transformer%20u%20e84489e1378145838e6d99046f9eb01f/Untitled%209.png)
+![image](https://user-images.githubusercontent.com/71754779/183721586-5a96ffa7-5838-45e5-be75-749c8364d6e4.png)
 
 Here Q, K and V are *query*, *key* and *value* respectively. *d* is the $query/key$ dimension, and $M^2$   is the patches in a window. 
 
@@ -101,6 +101,4 @@ Here Q, K and V are *query*, *key* and *value* respectively. *d* is the $query/k
 
 Here Swin-B model is build up to have of model size and computation complexity similar of ViT-B/DeiT-B. Researchers alspo has introduced Swin-T, Swin-S and Swin-L.
 
- 
-
-![Untitled](Swin%20Transformer%20Hierarchical%20Vision%20Transformer%20u%20e84489e1378145838e6d99046f9eb01f/Untitled%2010.png)
+![image](https://user-images.githubusercontent.com/71754779/183721531-8008c771-167a-4549-b22e-92b1762bd59c.png)
